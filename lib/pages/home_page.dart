@@ -1,16 +1,21 @@
 import 'package:cozy/models/city.dart';
 import 'package:cozy/models/space.dart';
 import 'package:cozy/models/tips.dart';
+import 'package:cozy/providers/space_provider.dart';
 import 'package:cozy/theme.dart';
 import 'package:cozy/widgets/bottom_nav_item.dart';
 import 'package:cozy/widgets/city_card.dart';
 import 'package:cozy/widgets/space_card.dart';
 import 'package:cozy/widgets/tips_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var spaceProvider = Provider.of<SpaceProvider>(context);
+    spaceProvider.getRecommendedSpace();
+
     return Scaffold(
       backgroundColor: whiteColor,
       body: SafeArea(
@@ -89,45 +94,27 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 16),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: edge),
-              child: Column(
-                children: [
-                  SpaceCard(
-                    Space(
-                      id: 1,
-                      name: 'sKosan Kumis',
-                      imageUrl: 'assets/space1.png',
-                      price: 999999,
-                      city: 'Pataruman',
-                      country: 'Germany',
-                      rating: 4,
-                    ),
-                  ),
-                  SizedBox(height: 25),
-                  SpaceCard(
-                    Space(
-                      id: 2,
-                      name: 'Orion Kos',
-                      imageUrl: 'assets/space2.png',
-                      price: 2000,
-                      city: 'Jayaraga',
-                      country: 'Malaysia',
-                      rating: 2,
-                    ),
-                  ),
-                  SizedBox(height: 25),
-                  SpaceCard(
-                    Space(
-                      id: 3,
-                      name: 'Kosan Murah',
-                      imageUrl: 'assets/space3.png',
-                      price: 1000,
-                      city: 'Tarogong Kidul',
-                      country: 'Mesir',
-                      rating: 5,
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                ],
+              child: FutureBuilder(
+                future: spaceProvider.getRecommendedSpace(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<Space> data = snapshot.data;
+                    int index = 0;
+
+                    return Column(
+                      children: data.map((item) {
+                        index++;
+                        return Container(
+                            margin: EdgeInsets.only(top: index == 1 ? 0 : 30),
+                            child: SpaceCard(item));
+                      }).toList(),
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
               ),
             ),
             //TIPS AND GUIDE

@@ -14,8 +14,8 @@ class SpaceCard extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => DetailPage()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => DetailPage(space)));
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(14),
@@ -24,7 +24,11 @@ class SpaceCard extends StatelessWidget {
               width: 130,
               child: Stack(
                 children: [
-                  Image.asset(space.imageUrl),
+                  Image.network(
+                    space.image_url,
+                    fit: BoxFit.cover,
+                    height: 110,
+                  ),
                   Align(
                     alignment: Alignment.topRight,
                     child: Container(

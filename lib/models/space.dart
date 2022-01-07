@@ -1,7 +1,8 @@
 class Space {
   int id;
   String name;
-  String imageUrl;
+  // ignore: non_constant_identifier_names
+  String image_url;
   int price;
   String city;
   String country;
@@ -10,13 +11,17 @@ class Space {
   String phone;
   String mapUrl;
   List photos;
-  int numberOfKitchens;
-  int numberOfBedrooms;
-  int numberOfCupboards;
+  // ignore: non_constant_identifier_names
+  int number_of_kitchens;
+  // ignore: non_constant_identifier_names
+  int number_of_bedrooms;
+  // ignore: non_constant_identifier_names
+  int number_of_cupboards;
   Space({
     this.id,
     this.name,
-    this.imageUrl,
+    // ignore: non_constant_identifier_names
+    this.image_url,
     this.price,
     this.city,
     this.country,
@@ -30,14 +35,19 @@ class Space {
   Space.fromJson(json) {
     id = json['id'];
     name = json['name'];
-    imageUrl = json['imageUrl'];
+    image_url = json['image_url'];
     price = json['price'];
     city = json['city'];
     country = json['country'];
-    rating = json['ratings'];
+    rating = json['rating'];
     address = json['address'];
     phone = json['phone'];
     mapUrl = json['mapUrl'];
     photos = json['photos'];
+    number_of_kitchens = json['number_of_kitchens'];
+    number_of_bedrooms = json['number_of_bedrooms'];
+    number_of_cupboards = json['number_of_cupboards'];
   }
+
+  get numberOfBedrooms => null;
 }

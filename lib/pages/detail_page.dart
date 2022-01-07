@@ -1,10 +1,13 @@
+import 'package:cozy/models/space.dart';
 import 'package:cozy/theme.dart';
 import 'package:cozy/widgets/facility_item.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cozy/widgets/space_card.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends StatelessWidget {
+  final Space space;
+  DetailPage(this.space);
   @override
   Widget build(BuildContext context) {
     void _launchURL(String url) async => await canLaunch(url)
@@ -15,8 +18,8 @@ class DetailPage extends StatelessWidget {
         body: SafeArea(
           bottom: false,
           child: Stack(children: [
-            Image.asset(
-              'assets/thumbnail.png',
+            Image.network(
+              space.image_url,
               width: MediaQuery.of(context).size.width,
               height: 350,
               fit: BoxFit.cover,
@@ -46,7 +49,7 @@ class DetailPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Kosan Kumis',
+                                    space.name,
                                     style: blackTextStyle.copyWith(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 22),
@@ -54,7 +57,7 @@ class DetailPage extends StatelessWidget {
                                   SizedBox(height: 2),
                                   Text.rich(
                                     TextSpan(
-                                        text: 'Rp. 52',
+                                        text: '\$${space.price}',
                                         style: purpleTextStyle.copyWith(
                                             fontSize: 16),
                                         children: [
@@ -115,19 +118,18 @@ class DetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               FacilityItem(
-                                imageUrl: 'assets/icon_kitchen.png',
-                                name: ' Kitchen',
-                                total: 2,
-                              ),
+                                  imageUrl: 'assets/icon_kitchen.png',
+                                  name: ' Kitchen',
+                                  total: space.number_of_bedrooms),
                               FacilityItem(
                                 imageUrl: 'assets/icon_bedroom.png',
                                 name: ' Bedroom',
-                                total: 5,
+                                total: space.number_of_bedrooms,
                               ),
                               FacilityItem(
                                 imageUrl: 'assets/icon_cupboard.png',
                                 name: ' Lemari',
-                                total: 5,
+                                total: space.number_of_cupboards,
                               ),
                             ],
                           ),
@@ -204,7 +206,7 @@ class DetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Jln.Merdeka Haurpanggung No.20\nPalembang',
+                                space.address,
                                 style: greyTextStyle,
                               ),
                               IconButton(
@@ -261,7 +263,7 @@ class DetailPage extends StatelessWidget {
                         )),
                     InkWell(
                       onLongPress: () {
-                        _launchURL('https://maps.google.co.id');
+                        _launchURL(space.mapUrl);
                       },
                       child: Image.asset(
                         'assets/btn_wishlist.png',

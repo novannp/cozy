@@ -21,14 +21,20 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
+  flutter_launcher_icons: ^0.9.2
   google_fonts: ^2.0.0
   http: ^0.13.3
   provider: ^5.0.0
   url_launcher: ^6.0.6
 
+flutter_icons:
+  android: "launcer_icon"
+  ios: true
+  image_path: "assets/logo.png"
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
